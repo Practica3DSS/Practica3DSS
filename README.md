@@ -1,28 +1,23 @@
 # Practica3DSS
+##Recetas
 
 Servicio RESTful
-Cliente administrador y cliente móvil (android).
+Cliente pc y cliente móvil (android).
 
-1. Setas
-  * Administraddor Añadir, eliminar o modificar seta.
-  * Usuario buscar y consultar seta.
-  * Atributos seta (inicial):
-    * Nombre común
-    * Nombre cientifico
-    * Imagen
-    * Comestible (comestibles, mortales, mediocres y tóxicas)
-    * Localización
-    * SOMBRERO
-    * LÁMINAS
-    * PIE
-    * CARNE
+###Requisitos Funcionales
+ * Registrarse (User). 
+ * Editar perfil (User).
+ * Darse de baja (User).
+ * Banear Usuario (Admin)?
+ * Añadir receta (User).
+ * Modificar receta (User).
+ * Eliminar receta (User).
+ * Eliminar receta (Admin)?
+ * Añadir/Modificar/Eliminar tags (Admin).
+ * Buscar (usuario, ¿nombre?, duración, tag y cantidad de personas) (User).
 
-2. Recetas
-  * Usuario Añadir, eliminar o modificar receta (propias).
-  * Añadir ingredientes (administrador?)
-  * Receta:
-    * Nombre
-    * Duración
-    * Lista ingrdientes con su cantidad.
-    * Usuario que la crea
-    * Descripción preparación.
+###Requisitos No Funcionales
+ * Cliente pc.
+ * Cliente móvil (android min 4.2).
+ * Sevidor RESTful.
+ * Interfaz móvil amigable.
