@@ -6,6 +6,8 @@ Cliente pc y cliente móvil (android).
 
 ###Requisitos Funcionales
  * Registrarse (User). 
+ * Iniciar Sesión (User).
+ * Iniciar Sesión (Admin).
  * Editar perfil (User).
  * Darse de baja (User).
  * Banear Usuario (Admin)?
