@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+  <persistence-unit name="Recypapp" transaction-type="RESOURCE_LOCAL">  
+  <class>model.Usuario</class>
+  <class>model.Receta</class>
+  <class>model.Ingrediente</class>
+  <class>model.Tag</class>
+  <class>model.Imagen</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+      <property name="javax.persistence.jdbc.url"
+        value="jdbc:derby:/home/silt/Documentos/Databases/Recypapp;create=true" />
+      <property name="javax.persistence.jdbc.user" value="Recypapp" />
+      <property name="javax.persistence.jdbc.password" value="908090P2S9" />
+ 
+      <!-- EclipseLink debe crear este esquema de base de datos automaticamente -->
+      <property name="eclipselink.ddl-generation" value="create-tables" />
+      <!-- <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/> -->
+      <property name="eclipselink.ddl-generation.output-mode"
+        value="database" />
+      <property name="eclipselink.connection-pool.default.initial" value="1"/>
+      <property name="eclipselink.connection-pool.default.min" value="1"/>
+      <property name="eclipselink.connection-pool.default.max" value="32"/>
+    </properties>
+ 
+  </persistence-unit>
+</persistence>
