@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
@@ -100,19 +101,16 @@ public class BDReceta {
     	Receta receta;
     	
 		try{
-			Query q = em.createQuery("SELECT r FROM Receta r WHERE r.idReceta = :idReceta");
-		       
-			q.setParameter("idReceta", id);
+			receta = em.getReference(Receta.class, id);
+            receta.getIdReceta();
+            em.remove(receta);
+            em.getTransaction().commit();
+			hecho = true;
+		}
+		catch (EntityNotFoundException enfe) {
+			System.out.println("Error al eliminar: " + enfe.getLocalizedMessage());
 			
-			@SuppressWarnings("unchecked")
-			List<Receta> rList = (List<Receta>) q.getResultList();
-			
-			if(rList.size() == 1){
-				receta = (Receta) q.getSingleResult();
-				em.remove(receta);
-				em.getTransaction().commit();
-				hecho = true;
-			}
+			hecho = false;
 		}
 		catch(IllegalArgumentException ie){
 			System.out.println("Error al eliminar: " + ie.getLocalizedMessage());
@@ -130,6 +128,54 @@ public class BDReceta {
 		
 		return hecho;
     }
+    
+    /**
+     * Eliminar una recetas de un usuario de la base de datos.
+     * @param id Id.
+     * @return True si ha tenido éxito, False si no.
+     */
+    public static boolean eliminarRecetasDeUsuario(long id){
+    	boolean hecho = false;
+    	EntityManager em = factoria.createEntityManager();
+    	
+    	em.getTransaction().begin();
+		
+		try{
+			Query q = em.createQuery("SELECT r FROM Receta r WHERE r.usuario.idUsuario = :idUsuario");
+	    	
+	    	q.setParameter("idUsuario", id);
+	    	
+	    	@SuppressWarnings("unchecked")
+			List<Receta> lista = (List<Receta>)(q.getResultList());
+			
+			for(Receta receta : lista){
+				em.remove(receta);
+			}
+			
+			em.getTransaction().commit();
+			hecho = true;
+		}
+		catch (EntityNotFoundException enfe) {
+			System.out.println("Error al eliminar: " + enfe.getLocalizedMessage());
+			
+			hecho = false;
+		}
+		catch(IllegalArgumentException ie){
+			System.out.println("Error al eliminar: " + ie.getLocalizedMessage());
+			
+			hecho = false;
+		}
+		catch(RollbackException re){
+			System.out.println("Error al eliminar: Error commit: " + re.getLocalizedMessage());
+			
+			hecho = false;
+		}
+		finally{
+			em.close();
+		}
+		
+		return hecho;
+    }    
     
     /**
      * Devuelve la lista completa de las recetas de la base de datos.

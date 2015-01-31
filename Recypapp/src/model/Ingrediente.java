@@ -33,6 +33,14 @@ public class Ingrediente implements Serializable {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "idReceta", nullable = false)
 	private Receta receta;
+
+	public Ingrediente() {
+	}
+
+	public Ingrediente(String nombre, String cantidad) {
+		this.nombre = nombre;
+		this.cantidad = cantidad;
+	}
 	
 	public Ingrediente(String nombre, String cantidad, Receta receta) {
 		this.nombre = nombre;

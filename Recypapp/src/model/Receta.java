@@ -45,8 +45,8 @@ public class Receta implements Serializable{
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, optional = true)
 	private Imagen imagen;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name="idUsuario", nullable=false)
+	@ManyToOne
+	@JoinColumn(name="idUsuario")
 	private Usuario usuario;
 	
 	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -54,10 +54,13 @@ public class Receta implements Serializable{
 	
 	@ManyToMany
 	@JoinTable(
-			name="EMP_PROJ",
+			name="REC_TAG",
 			joinColumns={@JoinColumn(name="REC_ID", referencedColumnName="idReceta")},
 			inverseJoinColumns={@JoinColumn(name="TAG_ID", referencedColumnName="idTag")})
 	private List<Tag> tags;
+
+	public Receta() {
+	}
 	
 	public Receta(String nombre, String descripcion, int duracion,
 			int cantidad_comensales, Imagen imagen, Usuario usuario,

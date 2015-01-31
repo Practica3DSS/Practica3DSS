@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.sun.istack.internal.NotNull;
@@ -42,7 +41,7 @@ public class Usuario implements Serializable{
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, optional = true)
 	private Imagen imagen; /** Imagen */
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	//@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Receta> recetas;
 
 	/**

@@ -20,7 +20,7 @@ public class BDUsuario {
 	  public static boolean insertar(Usuario usuario){
 		  factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	  	  EntityManager em = factoria.createEntityManager();
-		  private boolean hecho = false;
+		  boolean hecho = false;
 		  
 		  if(!existeEmail(usuario.getEmail())){
 	  	    	em.getTransaction().begin();
@@ -50,7 +50,7 @@ public class BDUsuario {
  	   
  	   try{
  		   //Hace la consulta y recibe una lista con todos los usuarios cuyo email coincide (solo debe haber un
- 		   //usuario con dicho email. Si la lista no está vacía, devuelve true.
+ 		   //usuario con dicho email. Si la lista no estï¿½ vacï¿½a, devuelve true.
  		   Query q = em.createQuery("SELECT t from Usuario t WHERE t.email = :email");
  		   q.setParameter("email", email);
  		   @SuppressWarnings("unchecked")
@@ -61,7 +61,7 @@ public class BDUsuario {
  			   }
  		   }
  		   /*
- 		    * Si la lista no está vacía tras la consulta, es porque el usuario con el email en custión sí existe.
+ 		    * Si la lista no estï¿½ vacï¿½a tras la consulta, es porque el usuario con el email en custiï¿½n sï¿½ existe.
  		    */
 //	 		   if (!listaUsuarios.isEmpty()){
 //	 			   existe = true;
@@ -70,6 +70,9 @@ public class BDUsuario {
  	   catch(Exception e){
  		   e.printStackTrace();
  	   } 	  
+ 	   
+ 	   em.close();
+ 	   
  	   return existe;
 	    }
     
@@ -82,17 +85,26 @@ public class BDUsuario {
     public static boolean eliminar(Usuario usuario){
     	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	  	EntityManager em = factoria.createEntityManager();
-		private boolean hecho = false;
-		
+		boolean hecho = false;
 
   	    em.getTransaction().begin();
-  	    String email = usuario.getEmail();
-  	    Query q = em.createQuery("SELECT t FROM Usuario t WHERE t.email = :email");
-  	    q.setParameter("email", email);
+  	    Query q = em.createQuery("SELECT t FROM Usuario t WHERE t.idUsuario = :idUsuario");
+  	    q.setParameter("idUsuario", usuario.getIdUsuario());
   	    @SuppressWarnings("unchecked")
 		List<Usuario> listaUsuarios = q.getResultList();
   	    for(Usuario user: listaUsuarios){
-  	    	if(user.getEmail().equals(email)){
+  	    	if(user.getIdUsuario() == usuario.getIdUsuario()){
+  	    		Query q2 = em.createQuery("SELECT r FROM Receta r WHERE r.usuario.idUsuario = :idUsuario");
+  		    	
+  		    	q2.setParameter("idUsuario", user.getIdUsuario());
+  		    	
+  		    	@SuppressWarnings("unchecked")
+  				List<Receta> lista = (List<Receta>)(q2.getResultList());
+  				
+  				for(Receta receta : lista){
+  					em.remove(receta);
+  				}
+  	    		
   	    		em.remove(user);
   	    		hecho = true;
   	    	}
@@ -111,23 +123,131 @@ public class BDUsuario {
      * @return Usuario usuario si encuntra un usuario con el email introducido
      */
     
-    public static Usuario getUsuarioPorEmail(String email){
+    @SuppressWarnings("unchecked")
+	public static Usuario getUsuarioPorEmail(String email){
     	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	  	EntityManager em = factoria.createEntityManager();
-		Usuario aux = new Usuario(); //Se devolverá si no se encuentra un usuario registracdo con el email que se recibe
-
+	  	Usuario aux = null;	  	
+	  	
   	    em.getTransaction().begin();
   	    Query q = em.createQuery("SELECT t FROM Usuario t WHERE t.email = :email");
-  	    List<Usuario> listaUsuarios = q.getResultList();
+		List<Usuario> listaUsuarios = q.getResultList();
   	    
-  	    if (listaUsuarios.size() == 0){ 	    
-  	    	return listaUsuarios[0];
+  	    if (listaUsuarios.size() == 1){ 	    
+  	    	Query q2 = em.createQuery("SELECT r FROM Receta r WHERE r.usuario.idUsuario = :idUsuario");
+  	    	
+  	    	aux = listaUsuarios.get(0);
+  		    q2.setParameter("idUsuario", aux.getIdUsuario());
+  		    aux.setRecetas((List<Receta>)q2.getResultList());
+	    }
+  	    
+  	    em.close();
+
+		return aux;
     }
-  	    else{
-  	    	return aux;
-  	    }
     
-    }  
+    /**Obtener un usuario sin sus recetas a partir de su correo
+     * 
+     * @param email
+     * @return Usuario usuario si encuntra un usuario con el email introducido
+     */
+    
+    @SuppressWarnings("unchecked")
+	public static Usuario getUsuarioPorEmailSinRecetas(String email){
+    	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	  	EntityManager em = factoria.createEntityManager();
+	  	Usuario aux = null;	  	
+	  	
+  	    em.getTransaction().begin();
+  	    Query q = em.createQuery("SELECT t FROM Usuario t WHERE t.email = :email");
+		List<Usuario> listaUsuarios = q.getResultList();
+  	    
+  	    if (listaUsuarios.size() == 1){ 	    
+  	    	aux = listaUsuarios.get(0);
+	    }
+  	    
+  	    em.close();
+
+		return aux;
+    }
+    
+    /**Obtener un usuario a partir de su id
+     * 
+     * @param id
+     * @return Usuario usuario si encuntra un usuario con el id introducido
+     */
+    
+    @SuppressWarnings("unchecked")
+	public static Usuario getUsuarioPorId(long id){
+    	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	  	EntityManager em = factoria.createEntityManager();
+  	    Usuario user = em.getReference(Usuario.class, id);
+  	    Query q2 = em.createQuery("SELECT r FROM Receta r WHERE r.usuario.idUsuario = :idUsuario");
+    	
+	    q2.setParameter("idUsuario", user.getIdUsuario());
+	    user.setRecetas((List<Receta>)q2.getResultList());
+  	    
+  	    em.close();
+  	    
+  	    return user;
+    }
+    
+    /**Obtener un usuario a partir de su id
+     * 
+     * @param id
+     * @return Usuario usuario sin sus recetas si encuentra un usuario con el id introducido
+     */
+    
+	public static Usuario getUsuarioPorIdSinRecetas(long id){
+    	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	  	EntityManager em = factoria.createEntityManager();
+  	    Usuario user = em.getReference(Usuario.class, id);
+  	    
+  	    em.close();
+  	    
+  	    return user;
+    }
+    
+    /**
+     * Devuelve la lista completa de usuarios de la base de datos.
+     * @return Lista de usuarios.
+     */
+    @SuppressWarnings("unchecked")
+	public static List<Usuario> obtenerLista(){
+    	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    	EntityManager em = factoria.createEntityManager();
+    	
+    	Query q = em.createQuery("SELECT u FROM Usuario u");
+		List<Usuario> list = (List<Usuario>)(q.getResultList());
+    	
+    	for(Usuario u : list){
+    		Query q2 = em.createQuery("SELECT r FROM Receta r WHERE r.usuario.idUsuario = :idUsuario");
+		    	
+		    q2.setParameter("idUsuario", u.getIdUsuario());
+    		u.setRecetas((List<Receta>)q2.getResultList());
+    	}
+    	
+    	em.close();
+    	
+		return list;
+    }
+    
+    /**
+     * Devuelve la lista completa de usuarios sin las recetas de la base de datos.
+     * @return Lista de usuarios.
+     */
+    @SuppressWarnings("unchecked")
+	public static List<Usuario> obtenerListaSinRecetas(){
+    	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    	EntityManager em = factoria.createEntityManager();
+    	
+    	Query q = em.createQuery("SELECT u FROM Usuario u");
+		List<Usuario> list = (List<Usuario>)(q.getResultList());
+    	
+    	em.close();
+    	
+		return list;
+    }
 }
 
 

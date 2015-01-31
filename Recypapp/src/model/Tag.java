@@ -24,6 +24,9 @@ public class Tag implements Serializable {
 	@NotNull
 	private String nombre;
 
+	public Tag() {
+	}
+	
 	public Tag(String nombre) {
 		this.nombre = nombre;
 	}
