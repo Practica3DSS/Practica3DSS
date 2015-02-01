@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.RollbackException;
 
 import model.Usuario;
 
@@ -247,6 +248,32 @@ public class BDUsuario {
     	em.close();
     	
 		return list;
+    }
+    
+    public static boolean actualizar(Usuario usuario){
+    	boolean hecho = false;
+    	EntityManager em = factoria.createEntityManager();
+    	
+		em.getTransaction().begin();
+			
+		try{
+			em.merge(usuario);
+			em.getTransaction().commit();
+			hecho = true;
+		}
+		catch(IllegalArgumentException ie){
+			System.out.println("Error al actualizar: " + ie.getLocalizedMessage());
+			
+			hecho = false;
+		}
+		catch(RollbackException re){
+			System.out.println("Error al actualizar: Error commit: " + re.getLocalizedMessage());
+			
+			hecho = false;
+		}
+		
+		em.close();
+		return hecho;
     }
 }
 
