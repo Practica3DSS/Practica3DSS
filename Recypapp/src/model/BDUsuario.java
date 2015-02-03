@@ -8,8 +8,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
 
-import model.Usuario;
-
 public class BDUsuario {
 	private static final String PERSISTENCE_UNIT_NAME = "Recypapp";
 	  private static EntityManagerFactory factoria;
@@ -22,6 +20,8 @@ public class BDUsuario {
 		  factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	  	  EntityManager em = factoria.createEntityManager();
 		  boolean hecho = false;
+		  
+		  usuario.setIdUsuario(0);
 		  
 		  if(!existeEmail(usuario.getEmail())){
 	  	    	em.getTransaction().begin();
@@ -80,21 +80,21 @@ public class BDUsuario {
     
     /** Elimina un usuario de la base de datos.
      *  
-     * @param usuario
+     * @param id
      * @return True si ha tenido exito, false en caso contrario.
      */
-    public static boolean eliminar(Usuario usuario){
+    public static boolean eliminar(long id){
     	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	  	EntityManager em = factoria.createEntityManager();
 		boolean hecho = false;
 
   	    em.getTransaction().begin();
   	    Query q = em.createQuery("SELECT t FROM Usuario t WHERE t.idUsuario = :idUsuario");
-  	    q.setParameter("idUsuario", usuario.getIdUsuario());
+  	    q.setParameter("idUsuario", id);
   	    @SuppressWarnings("unchecked")
 		List<Usuario> listaUsuarios = q.getResultList();
   	    for(Usuario user: listaUsuarios){
-  	    	if(user.getIdUsuario() == usuario.getIdUsuario()){
+  	    	if(user.getIdUsuario() == id){
   	    		Query q2 = em.createQuery("SELECT r FROM Receta r WHERE r.usuario.idUsuario = :idUsuario");
   		    	
   		    	q2.setParameter("idUsuario", user.getIdUsuario());
