@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.BDReceta;
+import model.BDTag;
 import model.BDUsuario;
 import model.Imagen;
 import model.Ingrediente;
 import model.Receta;
+import model.Tag;
 import model.Usuario;
 
 public class TestDataBase {
@@ -82,6 +84,8 @@ public class TestDataBase {
         //BDImagen.insertar(myExample);
         //BDImagen.insertar(myExample2);
 
+        
+        /*
         Usuario user = new Usuario("Nick", "password", "email", myExample);
 		
 		//Insertar receta
@@ -110,6 +114,9 @@ public class TestDataBase {
 		
 		//Eliminar
 		BDUsuario.eliminar(user.getIdUsuario());
+		*/
+        
+        BDTag.insertar(new Tag("Test"));
 	}
 
 }

@@ -66,7 +66,7 @@ public class TagServer {
 		model.Tag entity = null; 
 		
 		if(data != null){
-			entity = new model.Tag(data.getIdTag(), data.getNombre());
+			entity = new model.Tag(data.getNombre());
 			entity.setIdTag(data.getIdTag());
 		}
 		

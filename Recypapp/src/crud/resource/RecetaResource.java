@@ -7,75 +7,81 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import server.UsuarioServer;
-import crud.data.ListUsuario;
-import crud.data.UserLoggin;
-import crud.data.Usuario;
+import server.RecetaServer;
+import crud.data.ListReceta;
+import crud.data.Receta;
 
-@Path("/usuario")
-public class UsuarioResource {
-	private final UsuarioServer usuarioServer;
+@Path("/receta")
+public class RecetaResource {
+	private final RecetaServer recetaServer;
 
-	public UsuarioResource() {
-		this.usuarioServer = UsuarioServer.GetInstance();
+	public RecetaResource() {
+		this.recetaServer = RecetaServer.GetInstance();
 	}
 	
 	@GET
 	@Path(value = "retrieve/{id}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
-	public Usuario getUsuario(@PathParam("id") Long id) {
-		return usuarioServer.retrieve(id);
+	public Receta getReceta(@PathParam("id") Long id) {
+		return recetaServer.retrieve(id);
 	}
 
 	@GET
 	@Path(value = "retrieve")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
-	public ListUsuario getUsuarios() {
-		ListUsuario list = new ListUsuario();
+	public ListReceta getRecetas() {
+		ListReceta list = new ListReceta();
 		
-		list.setList(usuarioServer.retrieveList());
+		list.setList(recetaServer.retrieveList());
 		
 		return list;
 	}
 	
 	@GET
-	@Path(value = "retrieveByEmail")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Path(value = "retrieveByUser/{id}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
-	public Usuario getUsuarioByEmail(UserLoggin userData) {
-		Usuario user = usuarioServer.retrieveByEmail(userData.getEmail());
+	public ListReceta getRecetasByUser(@PathParam("id") Long id) {
+		ListReceta list = new ListReceta();
 		
-		if(user.getPassword().equals(userData.getPassword())){
-			user.setPassword(""); //Evitamos que el password circule innecesariamente.
-		}
-		else{
-			user = new Usuario();
-			user.setIdUsuario(-1); //Indicamos que fallo la identificación.
-		}
+		list.setList(recetaServer.retrieveList(id));
 		
-		return user;
+		return list;
+	}
+	
+	//http://localhost:8081/Recypapp/rest/receta/query?idTag=351&idUser=101&name=Org%C3%ADa&comensales=1&min_d=0&max_d=210
+	@GET
+	@Path(value = "query")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
+	public ListReceta getRecetas(@QueryParam("idTag") Long idTag, @QueryParam("idUser") Long idUser, @QueryParam("name") String name, 
+			@QueryParam("comensales") int comensales, @QueryParam("min_d") int min_d,  @QueryParam("max_d") int max_d) {
+		ListReceta list = new ListReceta();
+		
+		list.setList(recetaServer.retrieveList(idTag, idUser, name, comensales, min_d, max_d));
+		
+		return list;
 	}
 	
     @POST
     @Path(value = "delete")
-    @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
-    public Response deleteUsuario(Long id) {
-        boolean hecho = usuarioServer.delete(id);
+    public Response deleteReceta(Long id) {
+        boolean hecho = recetaServer.delete(id);
         Status estado;
         String respuesta;
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Usuario eliminado.";
+        	respuesta = "Receta eliminada.";
         }
         else{
         	estado = Status.NOT_FOUND;
-        	respuesta = "Usuario no encontrado.";
+        	respuesta = "Receta no encontrada.";
         }
         			
         return Response.status(estado).entity(respuesta).build();
@@ -85,19 +91,19 @@ public class UsuarioResource {
 	@Path(value = "insert")
 	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
-	public Response insertUsuario(Usuario usuario) {
-		boolean hecho = usuarioServer.insert(usuario);
+	public Response insertReceta(Receta receta) {
+		boolean hecho = recetaServer.insert(receta);
 		
 		Status estado;
         String respuesta;
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Usuario insertado.";
+        	respuesta = "Receta insertada.";
         }
         else{
         	estado = Status.INTERNAL_SERVER_ERROR;
-        	respuesta = "Usuario no insertado.";
+        	respuesta = "Receta no insertada.";
         }
         			
         return Response.status(estado).entity(respuesta).build();		
@@ -111,19 +117,19 @@ public class UsuarioResource {
 	@Path(value = "update")
 	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
-	public Response updateUsuario(@HeaderParam("pass") String pass, Usuario usuario) {
-		boolean hecho = usuarioServer.update(usuario, pass);
+	public Response updateReceta(@HeaderParam("pass") String pass, Receta receta) {
+		boolean hecho = recetaServer.update(receta, pass);
 		
 		Status estado;
         String respuesta;
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Usuario actualizado.";
+        	respuesta = "Receta actualizada.";
         }
         else{
         	estado = Status.INTERNAL_SERVER_ERROR;
-        	respuesta = "Usuario no actualizado.";
+        	respuesta = "Receta no actualizada.";
         }
         			
         return Response.status(estado).entity(respuesta).build();		

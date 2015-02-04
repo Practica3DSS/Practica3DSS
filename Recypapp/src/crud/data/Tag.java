@@ -2,26 +2,14 @@ package crud.data;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import com.sun.istack.internal.NotNull;
+@XmlRootElement(name = "tag")
 
-/**
- * @author Santiago
- * @author Daniel 
- */
-@Entity
 public class Tag implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idTag;
-	
-	@NotNull
 	private String nombre;
 
 	public Tag() {
@@ -32,6 +20,7 @@ public class Tag implements Serializable {
 		this.nombre = nombre;
 	}
 	
+	@XmlAttribute
 	public long getIdTag() {
 		return idTag;
 	}
@@ -40,6 +29,7 @@ public class Tag implements Serializable {
 		this.idTag = idTag;
 	}
 
+	@XmlAttribute
 	public String getNombre() {
 		return nombre;
 	}

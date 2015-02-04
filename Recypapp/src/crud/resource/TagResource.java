@@ -26,14 +26,14 @@ public class TagResource {
 	
 	@GET
 	@Path(value = "retrieve/{id}")
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
 	public Tag getTag(@PathParam("id") Long id) {
 		return tagServer.retrieve(id);
 	}
 	
 	@GET
 	@Path(value = "retrieve")
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
 	public ListTag getTags(){
 		ListTag list = new ListTag();
 		
@@ -46,8 +46,8 @@ public class TagResource {
 	@POST
     @Path(value = "delete")
     @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    public Response deleteUsuario(Long id) {
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
+    public Response deleteTag(Long id) {
         boolean hecho = tagServer.delete(id);
         Status estado;
         String respuesta;
@@ -68,8 +68,8 @@ public class TagResource {
 	@POST
 	@Path(value = "insert")
 	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Response insertUsuario(Tag tag) {
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
+	public Response insertTag(Tag tag) {
 		boolean hecho = tagServer.insert(tag);
 		
 		Status estado;
@@ -91,8 +91,8 @@ public class TagResource {
 	@POST
 	@Path(value = "update")
 	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Response updateUsuario(Tag tag) {
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
+	public Response updateTag(Tag tag) {
 		boolean hecho = tagServer.update(tag);
 		
 		Status estado;

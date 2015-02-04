@@ -4,20 +4,23 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.util.ArrayList;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.client.Entity;
-
-import crud.data.Imagen;
 
 import org.glassfish.jersey.client.ClientConfig;
 
-import crud.data.Usuario;
+import crud.data.Imagen;
+import crud.data.Ingrediente;
+import crud.data.ListId;
+import crud.data.ListIngrediente;
+import crud.data.Receta;
 
 public class TestServer {
 	 /**
@@ -73,8 +76,11 @@ public class TestServer {
 		
 		myExample.setMimeType("image/jpg");
         myExample.setFileName("mushroom");
+        myExample.setImageFile(new byte[0]);
+        
         
         File file = new File("images/mushroom.jpg");
+        /*
         try
         {
             // Lets open an image file
@@ -83,15 +89,36 @@ public class TestServer {
         catch (IOException ex)
         {
         }
+        */
+	
+		//Entity<Usuario> customerId = Entity.entity(new Usuario(-1, "n1", "pass", "e2", myExample), MediaType.APPLICATION_JSON_TYPE);
+
+        //Response response = service.path("insert").request().post(customerId);
+
+        
+		ListId tags = new ListId(new ArrayList<Long>());
+		ListIngrediente ingredientes = new ListIngrediente(new ArrayList<crud.data.Ingrediente>());
 		
-		Entity<Usuario> customerId = Entity.entity(new Usuario(-1, "n1", "pass", "e2", myExample), MediaType.APPLICATION_JSON_TYPE);
+		ingredientes.getIngredientes().add(new Ingrediente(0, "Putas", "2"));
+		ingredientes.getIngredientes().add(new Ingrediente(0, "Más Putas", "3"));
+		ingredientes.getIngredientes().add(new Ingrediente(0, "Más Más Putas", "10"));
+		
+		tags.getIds().add((long) 351);
+		
+		Entity<Receta> customerId = Entity.entity(new Receta(0, "Orgía", "Pos eso", 200, 1, myExample, 101, "", ingredientes, tags), MediaType.APPLICATION_JSON_TYPE);
 
         Response response = service.path("insert").request().post(customerId);
 		
+        /*
+		Entity<Long> customerId = Entity.entity((long) 501, MediaType.APPLICATION_JSON_TYPE);
+
+        Response response = service.path("delete").request().post(customerId);
+        */
+        
 		System.out.print(response.toString());
 	}
 	
 	private static URI getBaseURI() {
-		return UriBuilder.fromUri("http://localhost:8081/Recypapp/rest/usuario").build();
+		return UriBuilder.fromUri("http://localhost:8081/Recypapp/rest/receta").build();
 	}
 }

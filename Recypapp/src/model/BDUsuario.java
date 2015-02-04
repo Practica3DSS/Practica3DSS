@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,17 +23,32 @@ public class BDUsuario {
 		  boolean hecho = false;
 		  
 		  usuario.setIdUsuario(0);
-		  
+
 		  if(!existeEmail(usuario.getEmail())){
-	  	    	em.getTransaction().begin();
-	  	    	em.persist(usuario);
-	  	    	em.getTransaction().commit();
-	  	    	em.close();
-	  	    	hecho = true;
-	  	    }
-	 	    else{
-	 	    	System.out.println("El usuario ya existe");
-	 	    }
+			  em.getTransaction().begin();
+	  	    
+			  try{
+				  em.persist(usuario);
+				  em.getTransaction().commit();
+				  hecho = true;
+			  }
+			  catch(IllegalArgumentException | EntityExistsException ie){
+				  System.out.println("Error al insertar: " + ie.getLocalizedMessage());
+				  
+				  hecho = false;
+			  }
+			  catch(RollbackException re){
+				  System.out.println("Error al insertar: Error commit: " + re.getLocalizedMessage());
+				  
+				  hecho = false;
+			  }
+			  finally{
+				  em.close();
+			  }
+		  }
+		  else{
+			  System.out.println("El usuario ya existe");
+		  }
 		  
 		  return hecho;
 	  }
@@ -55,18 +71,13 @@ public class BDUsuario {
  		   Query q = em.createQuery("SELECT t from Usuario t WHERE t.email = :email");
  		   q.setParameter("email", email);
  		   @SuppressWarnings("unchecked")
-		List<Usuario> listaUsuarios = q.getResultList();
+ 		   List<Usuario> listaUsuarios = q.getResultList();
+ 		   
  		   for(Usuario user : listaUsuarios){
  			   if(user.getEmail().equals(email)){
  				   existe = true;
  			   }
  		   }
- 		   /*
- 		    * Si la lista no est� vac�a tras la consulta, es porque el usuario con el email en custi�n s� existe.
- 		    */
-//	 		   if (!listaUsuarios.isEmpty()){
-//	 			   existe = true;
-//	 		   }
  	   }
  	   catch(Exception e){
  		   e.printStackTrace();
@@ -75,7 +86,7 @@ public class BDUsuario {
  	   em.close();
  	   
  	   return existe;
-	    }
+    }
     
     
     /** Elimina un usuario de la base de datos.
@@ -182,12 +193,24 @@ public class BDUsuario {
 	public static Usuario getUsuarioPorId(long id){
     	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	  	EntityManager em = factoria.createEntityManager();
-  	    Usuario user = em.getReference(Usuario.class, id);
-  	    Query q2 = em.createQuery("SELECT r FROM Receta r WHERE r.usuario.idUsuario = :idUsuario");
+  	    Usuario user;
+	  	
+	  	try{
+	  		user = em.getReference(Usuario.class, id);
+	  	}
+	  	catch(Exception e){
+	  		System.out.println("Error el usuario no existe");
+	  		
+	  		user = null;
+	  	}
+
+	  	if(user != null){
+	  		Query q2 = em.createQuery("SELECT r FROM Receta r WHERE r.usuario.idUsuario = :idUsuario");
     	
-	    q2.setParameter("idUsuario", user.getIdUsuario());
-	    user.setRecetas((List<Receta>)q2.getResultList());
-  	    
+	  		q2.setParameter("idUsuario", user.getIdUsuario());
+	  		user.setRecetas((List<Receta>)q2.getResultList());
+	  	}
+	  	
   	    em.close();
   	    
   	    return user;
@@ -202,7 +225,16 @@ public class BDUsuario {
 	public static Usuario getUsuarioPorIdSinRecetas(long id){
     	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	  	EntityManager em = factoria.createEntityManager();
-  	    Usuario user = em.getReference(Usuario.class, id);
+  	    Usuario user;
+	  	
+	  	try{
+	  		user = em.getReference(Usuario.class, id);
+	  	}
+	  	catch(Exception e){
+	  		System.out.println("Error el usuario no existe");
+	  		
+	  		user = null;
+	  	}
   	    
   	    em.close();
   	    

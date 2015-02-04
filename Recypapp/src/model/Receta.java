@@ -137,4 +137,12 @@ public class Receta implements Serializable{
 	public void setImagen(Imagen imagen) {
 		this.imagen = imagen;
 	}
+	
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
 }

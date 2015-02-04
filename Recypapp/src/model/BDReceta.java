@@ -30,6 +30,7 @@ public class BDReceta {
 		boolean hecho = false;
 		EntityManager em = factoria.createEntityManager();
 		
+		receta.setIdReceta(0);
 		em.getTransaction().begin();
 		
 		try{
@@ -177,6 +178,26 @@ public class BDReceta {
 		return hecho;
     }    
     
+	public static Receta getRecetaPorId(long id){
+    	factoria = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	  	EntityManager em = factoria.createEntityManager();
+  	    
+	  	Receta receta;
+	  	
+	  	try{
+	  		receta = em.getReference(Receta.class, id);
+	  	}
+	  	catch(Exception e){
+	  		System.out.println("Error la receta no existe");
+	  		
+	  		receta = null;
+	  	}
+	  	
+  	    em.close();
+  	    
+  	    return receta;
+    }
+    
     /**
      * Devuelve la lista completa de las recetas de la base de datos.
      * @return Lista de recetas.
@@ -226,14 +247,14 @@ public class BDReceta {
     	List<String> params_name = new LinkedList<String>();
     	List<Object> params = new LinkedList<Object>();
  
-    	if(idTag > -1){
-    		extra = "inner join r.tags y";
+    	if(idTag > 0){
+    		extra = "inner join r.tags y ";
     		clause.add("y.idTag = :idTag");
     		params_name.add("idTag");
     		params.add(idTag);
     	}
     	
-    	if(idUsuario > -1){
+    	if(idUsuario > 0){
     		clause.add("r.usuario.idUsuario = :idUsuario");
     		params_name.add("idUsuario");
     		params.add(idUsuario);
@@ -242,7 +263,7 @@ public class BDReceta {
     	if(!name_contains.equals("")){
     		clause.add("r.nombre LIKE :nombre");
     		params_name.add("nombre");
-    		params.add(name_contains);
+    		params.add("%"+name_contains+"%");
     	}
     	
     	if(cantidad_comensales > 0){
@@ -277,7 +298,7 @@ public class BDReceta {
     	    extra += ")";
     	}
     	
-    	Query q = em.createQuery("SELECT r FROM Receta r" + extra);
+    	Query q = em.createQuery("SELECT r FROM Receta r " + extra);
     	
     	Iterator<String> paramsNameIter = params_name.iterator();
     	Iterator<Object> paramsIter = params.iterator();
