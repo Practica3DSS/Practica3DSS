@@ -20,6 +20,10 @@ public class Tag implements Serializable {
 		this.nombre = nombre;
 	}
 	
+	public Tag(String nombre){
+		this.nombre = nombre;
+	}
+	
 	@XmlAttribute
 	public long getIdTag() {
 		return idTag;

@@ -27,10 +27,14 @@ public class Tag implements Serializable {
 	public Tag() {
 	}
 	
-	public Tag(String nombre) {
+	public Tag(long idTag, String nombre) {
+		this.idTag = idTag;
 		this.nombre = nombre;
 	}
 	
+	public Tag(String nombre){
+		this.nombre = nombre;
+	}
 	public long getIdTag() {
 		return idTag;
 	}
