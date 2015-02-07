@@ -143,6 +143,7 @@ public class BDUsuario {
 	  	
   	    em.getTransaction().begin();
   	    Query q = em.createQuery("SELECT t FROM Usuario t WHERE t.email = :email");
+  	    q.setParameter("email", email);
 		List<Usuario> listaUsuarios = q.getResultList();
   	    
   	    if (listaUsuarios.size() == 1){ 	    
@@ -172,6 +173,7 @@ public class BDUsuario {
 	  	
   	    em.getTransaction().begin();
   	    Query q = em.createQuery("SELECT t FROM Usuario t WHERE t.email = :email");
+  	    q.setParameter("email", email);
 		List<Usuario> listaUsuarios = q.getResultList();
   	    
   	    if (listaUsuarios.size() == 1){ 	    
