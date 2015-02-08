@@ -19,7 +19,7 @@ public class ListTag implements Serializable{
 		this.list = list;
 	}
 	
-	@XmlElement(name = "tag")
+	@XmlElement
 	public List<Tag> getList() {
 		return list;
 	}

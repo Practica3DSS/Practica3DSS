@@ -123,7 +123,7 @@ public class Receta  implements Serializable{
 		this.imagen = imagen;
 	}
 
-	@XmlElement(name = "tags")
+	@XmlElement
 	public ListId getTags() {
 		return tags;
 	}

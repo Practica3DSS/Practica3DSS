@@ -19,7 +19,7 @@ public class ListReceta implements Serializable{
 		this.list = list;
 	}
 	
-	@XmlElement(name = "receta")
+	@XmlElement
 	public List<Receta> getList() {
 		return list;
 	}

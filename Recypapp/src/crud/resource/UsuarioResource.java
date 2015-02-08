@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response.Status;
 
 import server.UsuarioServer;
 import crud.data.ListUsuario;
+import crud.data.MensajeRespuesta;
 import crud.data.UserLoggin;
 import crud.data.Usuario;
 
@@ -67,15 +68,15 @@ public class UsuarioResource {
     public Response deleteUsuario(Long id) {
         boolean hecho = usuarioServer.delete(id);
         Status estado;
-        String respuesta;
+        MensajeRespuesta respuesta = new MensajeRespuesta();
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Usuario eliminado.";
+        	respuesta.setRespuesta("Usuario eliminado.");
         }
         else{
         	estado = Status.NOT_FOUND;
-        	respuesta = "Usuario no encontrado.";
+        	respuesta.setRespuesta("Usuario no encontrado.");
         }
         			
         return Response.status(estado).entity(respuesta).build();
@@ -89,15 +90,15 @@ public class UsuarioResource {
 		boolean hecho = usuarioServer.insert(usuario);
 		
 		Status estado;
-        String respuesta;
+		MensajeRespuesta respuesta = new MensajeRespuesta();
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Usuario insertado.";
+        	respuesta.setRespuesta("Usuario insertado.");
         }
         else{
         	estado = Status.INTERNAL_SERVER_ERROR;
-        	respuesta = "Usuario no insertado.";
+        	respuesta.setRespuesta("Usuario no insertado.");
         }
         			
         return Response.status(estado).entity(respuesta).build();		
@@ -115,15 +116,15 @@ public class UsuarioResource {
 		boolean hecho = usuarioServer.update(usuario, pass);
 		
 		Status estado;
-        String respuesta;
+		MensajeRespuesta respuesta = new MensajeRespuesta();
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Usuario actualizado.";
+        	respuesta.setRespuesta("Usuario actualizado.");
         }
         else{
         	estado = Status.INTERNAL_SERVER_ERROR;
-        	respuesta = "Usuario no actualizado.";
+        	respuesta.setRespuesta("Usuario no actualizado.");
         }
         			
         return Response.status(estado).entity(respuesta).build();		
