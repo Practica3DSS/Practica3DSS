@@ -45,10 +45,12 @@ public class UsuarioServer {
 	}
 	
 	public boolean update(crud.data.Usuario user, String pass) {
-		if(BDUsuario.getUsuarioPorIdSinRecetas(user.getIdUsuario()).equals(pass))
+		if(BDUsuario.getUsuarioPorIdSinRecetas(user.getIdUsuario()).getPassword().equals(pass)){
 			return BDUsuario.actualizar(dataToEntity(user));
-		else
+		}
+		else{
 			return false;
+		}
 	}
 	
 	public boolean delete(long id){
