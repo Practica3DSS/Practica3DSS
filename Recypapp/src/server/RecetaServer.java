@@ -73,7 +73,7 @@ public class RecetaServer {
 	}
 	
 	public boolean update(crud.data.Receta receta, String pass) {
-		if(BDUsuario.getUsuarioPorIdSinRecetas(receta.getUsuario()).equals(pass))
+		if(BDUsuario.getUsuarioPorIdSinRecetas(receta.getUsuario()).getPassword().equals(pass))
 			return BDReceta.actualizar(dataToEntity(receta));
 		else
 			return false;

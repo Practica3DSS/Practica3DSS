@@ -93,11 +93,13 @@ public class TestServer {
         }
         */
 	
-		//Entity<Usuario> customerId = Entity.entity(new Usuario(-1, "n1", "pass", "e2", myExample), MediaType.APPLICATION_JSON_TYPE);
+        myExample.setId((long)102);
+		Entity<Usuario> customerId = Entity.entity(new Usuario(101, "n1", "pass", "email", myExample), MediaType.APPLICATION_JSON_TYPE);
 
-        //Response response = service.path("insert").request().post(customerId);
+        Response response = service.path("update").request().header("pass", "password").post(customerId);
 
         
+        /*
 		ListId tags = new ListId(new ArrayList<Long>());
 		ListIngrediente ingredientes = new ListIngrediente(new ArrayList<crud.data.Ingrediente>());
 		
@@ -109,7 +111,7 @@ public class TestServer {
 		
 		Entity<Receta> customerId = Entity.entity(new Receta(0, "Orgía", "Pos eso", 200, 1, myExample, 101, "", ingredientes, tags), MediaType.APPLICATION_JSON_TYPE);
 
-        Response response = service.path("insert").request().post(customerId);
+        Response response = service.path("insert").request().post(customerId);*/
 		
         /*
 		Entity<Long> customerId = Entity.entity((long) 501, MediaType.APPLICATION_JSON_TYPE);
@@ -129,6 +131,6 @@ public class TestServer {
 	}
 	
 	private static URI getBaseURI() {
-		return UriBuilder.fromUri("http://localhost:8081/Recypapp/rest/receta").build();
+		return UriBuilder.fromUri("http://localhost:8081/Recypapp/rest/usuario").build();
 	}
 }
