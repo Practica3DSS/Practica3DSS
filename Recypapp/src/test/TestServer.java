@@ -105,29 +105,30 @@ public class TestServer {
 		ingredientes.getIngredientes().add(new Ingrediente(0, "Más Putas", "3"));
 		ingredientes.getIngredientes().add(new Ingrediente(0, "Más Más Putas", "10"));
 		
-		tags.getIds().add((long) 351);
+		tags.getId().add((long) 351);
 		
-		/*
 		Entity<Receta> customerId = Entity.entity(new Receta(0, "Orgía", "Pos eso", 200, 1, myExample, 101, "", ingredientes, tags), MediaType.APPLICATION_JSON_TYPE);
 
         Response response = service.path("insert").request().post(customerId);
-		*/
+		
         /*
 		Entity<Long> customerId = Entity.entity((long) 501, MediaType.APPLICATION_JSON_TYPE);
 
         Response response = service.path("delete").request().post(customerId);
         */
 		
+		/*
 		Entity<UserLoggin> customerId = Entity.entity(new UserLoggin("email", "password"), MediaType.APPLICATION_XML_TYPE);
 
         Response response = service.path("retrieveByEmail").request().post(customerId);
        
         Usuario customer = response.readEntity(Usuario.class);
-        
-		System.out.print(response.toString() + customer.getEmail());
+        */
+		
+		System.out.print(response.toString());
 	}
 	
 	private static URI getBaseURI() {
-		return UriBuilder.fromUri("http://localhost:8081/Recypapp/rest/usuario").build();
+		return UriBuilder.fromUri("http://localhost:8081/Recypapp/rest/receta").build();
 	}
 }

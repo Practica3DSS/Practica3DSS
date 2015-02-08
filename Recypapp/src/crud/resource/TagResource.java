@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response.Status;
 
 import server.TagServer;
 import crud.data.ListTag;
+import crud.data.MensajeRespuesta;
 import crud.data.Tag;
 
 
@@ -42,7 +43,6 @@ public class TagResource {
 		return list;
 	}
 	
-	
 	@POST
     @Path(value = "delete")
     @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
@@ -50,15 +50,15 @@ public class TagResource {
     public Response deleteTag(Long id) {
         boolean hecho = tagServer.delete(id);
         Status estado;
-        String respuesta;
+        MensajeRespuesta respuesta = new MensajeRespuesta();
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Tag eliminado.";
+        	respuesta.setRespuesta("Tag eliminado.");
         }
         else{
         	estado = Status.NOT_FOUND;
-        	respuesta = "Tag no encontrado.";
+        	respuesta.setRespuesta("Tag no encontrado.");
         }
         			
         return Response.status(estado).entity(respuesta).build();
@@ -71,17 +71,16 @@ public class TagResource {
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON + ";charset=utf-8"})
 	public Response insertTag(Tag tag) {
 		boolean hecho = tagServer.insert(tag);
-		
 		Status estado;
-        String respuesta;
+        MensajeRespuesta respuesta = new MensajeRespuesta();
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Tag insertado.";
+        	respuesta.setRespuesta("Tag insertado.");
         }
         else{
         	estado = Status.INTERNAL_SERVER_ERROR;
-        	respuesta = "Tag no insertado.";
+        	respuesta.setRespuesta("Tag no insertado.");
         }
         			
         return Response.status(estado).entity(respuesta).build();		
@@ -96,15 +95,15 @@ public class TagResource {
 		boolean hecho = tagServer.update(tag);
 		
 		Status estado;
-        String respuesta;
+		MensajeRespuesta respuesta = new MensajeRespuesta();
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Tag actualizado.";
+        	respuesta.setRespuesta("Tag actualizado.");
         }
         else{
         	estado = Status.INTERNAL_SERVER_ERROR;
-        	respuesta = "Tag no actualizado.";
+        	respuesta.setRespuesta("Tag no actualizado.");
         }
         			
         return Response.status(estado).entity(respuesta).build();		

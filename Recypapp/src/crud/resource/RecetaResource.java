@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response.Status;
 
 import server.RecetaServer;
 import crud.data.ListReceta;
+import crud.data.MensajeRespuesta;
 import crud.data.Receta;
 
 @Path("/receta")
@@ -73,15 +74,15 @@ public class RecetaResource {
     public Response deleteReceta(Long id) {
         boolean hecho = recetaServer.delete(id);
         Status estado;
-        String respuesta;
+        MensajeRespuesta respuesta = new MensajeRespuesta();
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Receta eliminada.";
+        	respuesta.setRespuesta("Receta eliminada.");
         }
         else{
         	estado = Status.NOT_FOUND;
-        	respuesta = "Receta no encontrada.";
+        	respuesta.setRespuesta("Receta no encontrada.");
         }
         			
         return Response.status(estado).entity(respuesta).build();
@@ -95,15 +96,15 @@ public class RecetaResource {
 		boolean hecho = recetaServer.insert(receta);
 		
 		Status estado;
-        String respuesta;
+		MensajeRespuesta respuesta = new MensajeRespuesta();
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Receta insertada.";
+        	respuesta.setRespuesta("Receta insertada.");
         }
         else{
         	estado = Status.INTERNAL_SERVER_ERROR;
-        	respuesta = "Receta no insertada.";
+        	respuesta.setRespuesta("Receta no insertada.");
         }
         			
         return Response.status(estado).entity(respuesta).build();		
@@ -121,15 +122,15 @@ public class RecetaResource {
 		boolean hecho = recetaServer.update(receta, pass);
 		
 		Status estado;
-        String respuesta;
+		MensajeRespuesta respuesta = new MensajeRespuesta();
         
         if(hecho){
         	estado = Status.OK;
-        	respuesta = "Receta actualizada.";
+        	respuesta.setRespuesta("Receta actualizada.");
         }
         else{
         	estado = Status.INTERNAL_SERVER_ERROR;
-        	respuesta = "Receta no actualizada.";
+        	respuesta.setRespuesta("Receta no actualizada.");
         }
         			
         return Response.status(estado).entity(respuesta).build();		

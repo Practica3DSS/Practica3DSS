@@ -96,7 +96,7 @@ public class RecetaServer {
 			}
 			
 			for(model.Tag tag : entity.getTags()){
-				tags.getIds().add(tag.getIdTag());
+				tags.getId().add(tag.getIdTag());
 			}
 			
 			data = new crud.data.Receta(entity.getIdReceta(), entity.getNombre(), entity.getDescripcion(), entity.getDuracion(),
@@ -129,8 +129,8 @@ public class RecetaServer {
 				}
 			}
 			
-			if(data.getTags().getIds() != null){
-				for(Long id : data.getTags().getIds()){
+			if(data.getTags().getId() != null){
+				for(Long id : data.getTags().getId()){
 					tags.add(BDTag.getTagPorId(id));
 				}
 			}

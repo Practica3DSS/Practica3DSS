@@ -15,16 +15,16 @@ public class ListId implements Serializable{
 	public ListId() {
 	}
 
-	public ListId(List<Long> ids) {
-		this.id = ids;
+	public ListId(List<Long> id) {
+		this.id = id;
 	}
 
-	@XmlElement(name = "id")
-	public List<Long> getIds() {
+	@XmlElement
+	public List<Long> getId() {
 		return id;
 	}
 
-	public void setIds(List<Long> id) {
+	public void setId(List<Long> id) {
 		this.id = id;
 	}
 }
