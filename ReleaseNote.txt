@@ -13,6 +13,11 @@ Para el desarrollo del servicio, se han desarrollado tres partes:
 
 Enlace al repositorio de GitHub: https://github.com/Practica3DSS/Practica3DSS
     El repositorio de GitHub contiene el código completo del servidor.
+    Contiene:
+        - Android: Proyecto de android studio con todo el código y los recursos de la aplicación android.
+        - Documentacion: Documentacion del proyecto, estando aqui la presentación que se empleo en la exposición.
+        - Recypapp: Proyecto eclipse del servidor.
+        - RecypappEscritorio: Proyecto eclipse con la aplicación de escritorio (aunque no incluidas, usa las mismas librerías que las del servidor).
 
 Enlace de descarga a Dropbox: https://www.dropbox.com/sh/769zg6f6m8uin7g/AACtn8QphOAThmmXPmGeGqC-a?dl=0
     La carpeta de Dropbox contiene:
@@ -20,14 +25,18 @@ Enlace de descarga a Dropbox: https://www.dropbox.com/sh/769zg6f6m8uin7g/AACtn8Q
         - RecypappEscritorio.jar ejecutable (cliente en java)
         - RecyappAndroid.apk para instalar el cliente android.
 
-Las librerías utilizadas son las estándares de JSON y Jersey.
+Las librerías utilizadas son las estándares de JSON y Jersey(2.0).
 
+Sin embargo, en la aplicación android se tuvieron que usar otras (spring en vez de jersey, ya que este ultimo no funcionaba bien en android):
+    - Para imagen circular: 'de.hdodenhof:circleimageview:1.2.1'
+    - Spring: 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    - Jackson: 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
 
 El servidor de la aplicación se ha desplegado en Openshift para su acceso directo a través de los clientes.
-
-
-
-
+La dirección es: http://recypapptomcat-silttest.rhcloud.com.
+Esta se puede cambiar por otra en la aplicación android (dandole a : en la barra superior y luego a settings), pero no incluya una barra al final.
+La aplicación android puede leer y cargar imágenes: Pulse la imagen en la ventana del registro, perfil y añadir/editar receta para hacerlo.
+Para accederal perfil de usuario, pulse la imagen en el menú lateral desplegable (navigation drawer).
 
 Por falta de tiempo, la aplicación no contiene una funcionalidad completa, aunque la funcionalidad que se explicó en la presentación está implementada completamente. En concreto:
 
