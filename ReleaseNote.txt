@@ -1,4 +1,4 @@
-Prácita 3 de la asignatura Desarrollo de Sistemas Software Basados en Componentes: RECYPAPP
+﻿Prácita 3 de la asignatura Desarrollo de Sistemas Software Basados en Componentes: RECYPAPP
 
 Autores:
     - Santiago López Tapia
@@ -11,6 +11,7 @@ Para el desarrollo del servicio, se han desarrollado tres partes:
     - Aplicación Android: Desarrollada por Santiago
     - Aplicación Java: Desarrollada por Daniel
 
+Las librerías utilizadas son las estándares de JSON y Jersey.
 
 
 El servidor de la aplicación se ha desplegado en Openshift para su acceso directo a través de los clientes.
