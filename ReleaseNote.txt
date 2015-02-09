@@ -1,0 +1,32 @@
+Prácita 3 de la asignatura Desarrollo de Sistemas Software Basados en Componentes: RECYPAPP
+
+Autores:
+    - Santiago López Tapia
+    - Daniel Álvarez González
+
+Hemos creado un servicio web RESTFUL para la compartición de recetas de cocina.
+Para el desarrollo del servicio, se han desarrollado tres partes:
+    
+    - Servidor: Desarrollado en tres Santiago y Daniel
+    - Aplicación Android: Desarrollada por Santiago
+    - Aplicación Java: Desarrollada por Daniel
+
+
+
+El servidor de la aplicación se ha desplegado en Openshift para su acceso directo a través de los clientes.
+
+
+
+
+
+Por falta de tiempo, la aplicación no contiene una funcionalidad completa, aunque la funcionalidad que se explicó en la presentación está implementada completamente. En concreto:
+
+    - Aplicación Java:
+        No permite agregar imágenes debido a que la complejidad de desarrollar un explorador de archivos.
+        No permite listar las recetas de otros usuarios, sólo las propias.
+        
+
+
+    Para añadir en un futuro en la aplicación android:
+        - Compatibilidad hasta la versión 2.3 de android.
+        - Optimizaciones para reducir el número de comunicaciones y memoria usada
