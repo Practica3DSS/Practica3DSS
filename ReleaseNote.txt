@@ -11,6 +11,15 @@ Para el desarrollo del servicio, se han desarrollado tres partes:
     - Aplicación Android: Desarrollada por Santiago
     - Aplicación Java: Desarrollada por Daniel
 
+Enlace al repositorio de GitHub: https://github.com/Practica3DSS/Practica3DSS
+    El repositorio de GitHub contiene el código completo del servidor.
+
+Enlace de descarga a Dropbox: https://www.dropbox.com/sh/769zg6f6m8uin7g/AACtn8QphOAThmmXPmGeGqC-a?dl=0
+    La carpeta de Dropbox contiene:
+        - El fichero Recypapp.war generado del servidor.
+        - RecypappEscritorio.jar ejecutable (cliente en java)
+        - RecyappAndroid.apk para instalar el cliente android.
+
 Las librerías utilizadas son las estándares de JSON y Jersey.
 
 
