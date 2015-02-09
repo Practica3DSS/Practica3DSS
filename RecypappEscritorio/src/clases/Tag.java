@@ -1,4 +1,4 @@
-package crud.data;
+package clases;
 
 import java.io.Serializable;
 
