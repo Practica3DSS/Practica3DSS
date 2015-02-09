@@ -50,7 +50,7 @@ public class UsuarioResource {
 	public Usuario getUsuarioByEmail(UserLoggin userData) {
 		Usuario user = usuarioServer.retrieveByEmail(userData.getEmail());
 		
-		if(user.getPassword().equals(userData.getPassword())){
+		if(user != null && user.getPassword().equals(userData.getPassword())){
 			user.setPassword(""); //Evitamos que el password circule innecesariamente.
 		}
 		else{
