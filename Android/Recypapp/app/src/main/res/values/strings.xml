@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Recypapp</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Identificarse</string>
+    <string name="title_activity_registration">Registrarse</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_nick">Nick</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_again">Password (repetir)</string>
+    <string name="prompt_password_new">Password nuevo</string>
+    <string name="prompt_password_new_again">Password nuevo (repetir)</string>
+    <string name="action_sign_in">Identificarse</string>
+    <string name="action_reg">Registrarse</string>
+    <string name="action_log_cout">Cerrar Sesión</string>
+    <string name="action_mod">Modificar</string>
+    <string name="error_invalid_email">La dirección de email es inválida</string>
+    <string name="error_no_valid_password">El password ha de tener almenos 5 caractéres</string>
+    <string name="error_incorrect_password_again">Los passwords introducidos no coinciden</string>
+    <string name="error_incorrect_password">El email o el password son incorrectos</string>
+    <string name="error_field_required">Este campo es requerido</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_section1">Buscar</string>
+    <string name="title_section2">Mis Recetas</string>
+    <string name="navigation_drawer_open">Abrir menú lateral</string>
+    <string name="navigation_drawer_close">Cerrar menú lateralr</string>
+    <string name="action_example">Example action</string>
+    <string name="list_user_name">Autor:</string>
+    <string name="list_cantidad">Personas:</string>
+    <string name="list_hour">Horas:</string>
+    <string name="list_min">minutos:</string>
+    <string name="prompt_contiene">Nombre contiene</string>
+    <string name="button_tag">Seleccionar Tag</string>
+    <string name="comensales">Número de comensales</string>
+    <string name="horas">H</string>
+    <string name="minutos">Min</string>
+    <string name="min_dur">Duracion minima</string>
+    <string name="max_dur">Duracion máxima</string>
+    <string name="title_activity_perfil">Perfil</string>
+    <string name="title_activity_tag_search">TagSearchActivity</string>
+    <string name="title_activity_edit_receta">Editar receta</string>
+    <string name="title_activity_create_receta">Nueva receta</string>
+    <string name="prompt_name_receta">Nombre de la receta</string>
+    <string name="prompt_duration_receta">Duración</string>
+    <string name="prompt_description_receta">Descripción...</string>
+    <string name="button_tags">Tags</string>
+    <string name="button_ingredientes">Ingredientes</string>
+    <string name="title_activity_ver_receta">Ver receta</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_receta_search">Recetas búsqueda</string>
+    <string name="title_activity_tag_multi_select">Tags</string>
+    <string name="title_activity_editar_ingredientes">Ingredientes</string>
+    <string name="title_activity_tag_ver_receta">Tags</string>
+
+</resources>
